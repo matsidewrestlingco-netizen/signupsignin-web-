@@ -27,18 +27,22 @@ beforeEach(() => {
 describe('Landing', () => {
   it('renders the App Store badge with correct link and target', () => {
     render(<Landing />);
-    const badge = screen.getByAltText('Download on the App Store');
-    expect(badge).toBeInTheDocument();
-    const link = badge.closest('a');
+    const link = screen.getByRole('link', { name: /download on the app store/i });
     expect(link).toHaveAttribute('href', 'https://apps.apple.com/us/app/signupsignin/id6762022121');
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+    expect(screen.getByAltText('Download on the App Store')).toBeInTheDocument();
   });
 
   it('renders the Apple trademark notice', () => {
     render(<Landing />);
     expect(
-      screen.getByText(/App Store® is a registered trademark of Apple Inc\./)
+      screen.getByText('App Store® is a registered trademark of Apple Inc.')
     ).toBeInTheDocument();
+  });
+
+  it('renders the "Also available on iOS" label', () => {
+    render(<Landing />);
+    expect(screen.getByText('Also available on iOS')).toBeInTheDocument();
   });
 });
