@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import logo from '../assets/susilogo.png';
+import appStoreBadge from '../assets/app-store-badge-white.svg';
 
 export function Landing() {
   const { currentUser, userProfile } = useAuth();
@@ -106,6 +107,25 @@ export function Landing() {
                 records.
               </p>
             </div>
+          </div>
+
+          <div className="mt-16 pt-10 border-t border-primary-600 text-center">
+            <p className="text-primary-200 text-sm mb-4">Also available on iOS</p>
+            <a
+              href="https://apps.apple.com/us/app/signupsignin/id6762022121"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <img
+                src={appStoreBadge}
+                alt="Download on the App Store"
+                className="h-10"
+              />
+            </a>
+            <p className="mt-3 text-xs text-primary-400">
+              App Store® is a registered trademark of Apple Inc.
+            </p>
           </div>
         </main>
 
