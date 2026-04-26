@@ -54,6 +54,7 @@ A running list of planned enhancements, ideas from testers, and feature requests
 
 | Feature | Shipped |
 |---------|---------|
+| App Store badge on landing page | Apr 2026 |
 | Day-of Roster (check-in) | Mar 2026 |
 | Email confirmations & reminders | Apr 2026 |
 | Viral loop (org discovery) | Apr 2026 |
