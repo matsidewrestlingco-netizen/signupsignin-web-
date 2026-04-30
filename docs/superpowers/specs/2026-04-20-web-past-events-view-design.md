@@ -15,10 +15,12 @@ Admins have no way to view completed events and their signup history on the web.
 ## Design
 
 ### Toggle
-An **Upcoming / Past** toggle is added at the top of the admin events list page, defaulting to **Upcoming** on load.
+An **Upcoming / Past** pill/segmented control is added at the top of the admin events list page, inline with the page header alongside the Create Event button, defaulting to **Upcoming** on load.
 
 - **Upcoming** — events where `startTime >= now`, sorted soonest first (current behavior)
 - **Past** — events where `startTime < now`, sorted most recent first
+
+**Visual style:** Dark navy active pill (`bg-primary-700 text-white`) on a light gray container (`bg-gray-200`), `rounded-lg` container with `rounded-md` pills. Inactive option is unstyled text (`text-gray-500`). This is a new pattern for the app — no existing segmented controls to match against.
 
 ### Filtering
 Client-side — the existing Firestore query is unchanged. Events are split into upcoming/past arrays in memory using the current timestamp at render time.
@@ -27,18 +29,19 @@ Client-side — the existing Firestore query is unchanged. Events are split into
 Clicking a past event opens the existing event detail page unchanged. The full signup roster, slot fill counts, and attendance data are already available there — no new views needed.
 
 ### Empty States
-- Upcoming with no events: existing empty state unchanged
-- Past with no events: *"No past events yet"*
+- **No events at all** (`events.length === 0`): existing "No events yet / Create your first event" card, shown regardless of active tab.
+- **Upcoming tab, no upcoming events** (but past events exist): *"No upcoming events"* message.
+- **Past tab, no past events**: *"No past events yet"* message.
 
 ---
 
 ## Implementation Notes
 
-- File to modify: admin events list page (confirm exact path — likely `src/pages/admin/Events.tsx`)
+- File to modify: `src/pages/admin/Events.tsx`
 - Use a `useState` hook for the selected tab (`'upcoming' | 'past'`)
 - Split events array at render time by comparing `event.startTime` to `Date.now()`
 - Past events sorted descending (most recent first)
-- Style the toggle consistently with other segmented controls in the web app
+- Toggle is a pill/segmented control: `bg-gray-200 rounded-lg p-1` container, active pill uses `bg-primary-700 text-white rounded-md`, inactive uses `text-gray-500`
 
 ---
 
