@@ -29,6 +29,7 @@ export function AdminEvents() {
   const [description, setDescription] = useState('');
   const [isPublic, setIsPublic] = useState(true);
   const [showVolunteerNames, setShowVolunteerNames] = useState(false);
+  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
 
   const resetForm = () => {
     setTitle('');
@@ -98,8 +99,12 @@ export function AdminEvents() {
     }
   };
 
-  const upcomingEvents = events.filter((e) => e.startTime >= new Date());
-  const pastEvents = events.filter((e) => e.startTime < new Date());
+  const upcomingEvents = events
+    .filter((e) => e.startTime >= new Date())
+    .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
+  const pastEvents = events
+    .filter((e) => e.startTime < new Date())
+    .sort((a, b) => b.startTime.getTime() - a.startTime.getTime());
 
   return (
     <div>
@@ -108,12 +113,36 @@ export function AdminEvents() {
           <h1 className="page-title">Events</h1>
           <p className="page-subtitle">Manage your organization's events</p>
         </div>
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="btn-primary"
-        >
-          Create Event
-        </button>
+        <div className="flex items-center gap-4">
+          <div className="bg-gray-200 rounded-lg p-1 flex">
+            <button
+              onClick={() => setActiveTab('upcoming')}
+              className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                activeTab === 'upcoming'
+                  ? 'bg-primary-700 text-white'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Upcoming
+            </button>
+            <button
+              onClick={() => setActiveTab('past')}
+              className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                activeTab === 'past'
+                  ? 'bg-primary-700 text-white'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Past
+            </button>
+          </div>
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="btn-primary"
+          >
+            Create Event
+          </button>
+        </div>
       </div>
 
       {loading ? (
@@ -132,38 +161,38 @@ export function AdminEvents() {
             </button>
           </div>
         </div>
+      ) : activeTab === 'upcoming' ? (
+        upcomingEvents.length === 0 ? (
+          <div className="card">
+            <div className="card-body text-center py-12">
+              <p className="text-gray-500">No upcoming events</p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {upcomingEvents.map((event) => (
+              <Link key={event.id} to={`/admin/events/${event.id}`}>
+                <EventCard event={event} />
+              </Link>
+            ))}
+          </div>
+        )
       ) : (
-        <>
-          {upcomingEvents.length > 0 && (
-            <section className="mb-8">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                Upcoming Events ({upcomingEvents.length})
-              </h2>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {upcomingEvents.map((event) => (
-                  <Link key={event.id} to={`/admin/events/${event.id}`}>
-                    <EventCard event={event} />
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {pastEvents.length > 0 && (
-            <section>
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
-                Past Events ({pastEvents.length})
-              </h2>
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {pastEvents.map((event) => (
-                  <Link key={event.id} to={`/admin/events/${event.id}`}>
-                    <EventCard event={event} />
-                  </Link>
-                ))}
-              </div>
-            </section>
-          )}
-        </>
+        pastEvents.length === 0 ? (
+          <div className="card">
+            <div className="card-body text-center py-12">
+              <p className="text-gray-500">No past events yet</p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {pastEvents.map((event) => (
+              <Link key={event.id} to={`/admin/events/${event.id}`}>
+                <EventCard event={event} />
+              </Link>
+            ))}
+          </div>
+        )
       )}
 
       <Modal
