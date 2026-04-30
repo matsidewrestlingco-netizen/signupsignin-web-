@@ -42,6 +42,7 @@ export function AdminEvents() {
     setError('');
     setSelectedTemplateId('');
     setPendingSlots([]);
+    setActiveTab('upcoming');
   };
 
   const handleTemplateSelect = (templateId: string) => {

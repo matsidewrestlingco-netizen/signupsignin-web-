@@ -125,6 +125,18 @@ describe('AdminEvents — Upcoming/Past toggle', () => {
     expect(titles[1]).toHaveTextContent('Fall Festival');     // 14 days ago — older
   });
 
+  it('shows upcoming events sorted soonest first', () => {
+    mockUseEvents.mockReturnValue({
+      events: [upcomingEvent2, upcomingEvent1], // out of order — State Finals before Spring Tournament
+      loading: false,
+      createEvent: vi.fn(),
+    });
+    render(<AdminEvents />);
+    const titles = screen.getAllByText(/Tournament|Finals/);
+    expect(titles[0]).toHaveTextContent('Spring Tournament'); // 7 days away — sooner
+    expect(titles[1]).toHaveTextContent('State Finals');      // 14 days away — later
+  });
+
   it('shows the no-events empty state when there are no events at all', () => {
     mockUseEvents.mockReturnValue({
       events: [],
