@@ -3,7 +3,7 @@ export function PrivacyPolicy() {
     <div className="min-h-screen bg-white">
       <div className="max-w-3xl mx-auto px-6 py-12">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
-        <p className="text-sm text-gray-500 mb-10">Effective date: April 3, 2026</p>
+        <p className="text-sm text-gray-500 mb-10">Effective date: April 3, 2026 · Last updated: June 19, 2026</p>
 
         <div className="space-y-8">
           <section>
@@ -82,11 +82,34 @@ export function PrivacyPolicy() {
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Data Retention</h2>
+            <p className="text-sm text-gray-600 leading-relaxed mb-2">
+              <strong>User accounts.</strong> We retain your account data for as long as your
+              account has been used within the past <strong>12 months</strong>. After 12 months
+              of inactivity (no logins), we will send an inactivity-warning email to your account
+              email at the 10-month mark, allow a 60-day grace period during which you can log in
+              to reset the timer or export your data, and then permanently delete the account.
+            </p>
+            <p className="text-sm text-gray-600 leading-relaxed mb-2">
+              <strong>Event signup records.</strong> Event signup records are retained at the
+              discretion of the organization that manages the event. We recommend organizations
+              delete past-event signup records within 12 months of the event date.
+            </p>
+            <p className="text-sm text-gray-600 leading-relaxed mb-2">
+              <strong>Mobile push notification tokens</strong> (mobile app only). Expo push
+              tokens are removed when you log out from a device or when your account is deleted.
+            </p>
+            <p className="text-sm text-gray-600 leading-relaxed mb-2">
+              <strong>User-initiated deletion.</strong> You may request deletion of your account
+              and associated data at any time by contacting us at{' '}
+              <a href="mailto:support@matside.org" className="text-primary-600 hover:underline">
+                support@matside.org
+              </a>
+              .
+            </p>
             <p className="text-sm text-gray-600 leading-relaxed">
-              We retain your account data for as long as your account is active. Event signup
-              records are retained at the discretion of the organization that manages the event.
-              You may request deletion of your account and associated data at any time by
-              contacting us.
+              <strong>Audit / activity log.</strong> Internal audit-log entries are retained for
+              <strong> 12 months on a rolling basis</strong>, then automatically deleted.
+              Records subject to a legal hold are retained until the hold is released.
             </p>
           </section>
 
